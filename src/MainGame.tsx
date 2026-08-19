@@ -1,20 +1,24 @@
 import { useState } from 'react'
+import bodyParts from '../assets/body-parts.json'
 import { CastleScreen } from './screens/CastleScreen'
 import { DressScreen } from './screens/DressScreen'
 import { FashionShowScreen } from './screens/FashionShowScreen'
 import { ScoreScreen } from './screens/ScoreScreen'
 import { SexChoiceScreen } from './screens/SexChoiceScreen'
-import type { CharacterChoice } from './types/CharacterChoice'
+import {
+  SEX_CHOICES,
+  type CharacterChoice,
+  type SexChoice,
+} from './types/CharacterChoice'
 
 export type { CharacterChoice } from './types/CharacterChoice'
 
 type GamePhase = 'castle' | 'sex-choice' | 'dress' | 'fashion-show' | 'score'
 
 type CharacterChoices = CharacterChoice[]
+type BodyPart = keyof (typeof bodyParts)['F']
 
-const CHARACTER_OPTION_COUNT = 4
 const FASHION_SHOW_COUNT = 3
-const SEX_CHOICES = ['F', 'M'] as const
 
 const INITIAL_CHARACTER_CHOICE: CharacterChoice = {
   sex: null,
@@ -24,15 +28,40 @@ const INITIAL_CHARACTER_CHOICE: CharacterChoice = {
 }
 
 function getRandomIndex(length: number): number {
+  if (length === 0) {
+    return 0
+  }
+
   return Math.floor(Math.random() * length)
 }
 
+function getNextBodyPartIndex(
+  sex: SexChoice | null,
+  bodyPart: BodyPart,
+  currentIndex: number,
+): number {
+  if (sex == null) {
+    return 0
+  }
+
+  const optionCount = bodyParts[sex][bodyPart].length
+
+  if (optionCount === 0) {
+    return 0
+  }
+
+  return ((currentIndex + 1) % optionCount + optionCount) % optionCount
+}
+
 function createRandomCharacterChoice(): CharacterChoice {
+  const sex = SEX_CHOICES[getRandomIndex(SEX_CHOICES.length)]
+  const availableBodyParts = bodyParts[sex]
+
   return {
-    sex: SEX_CHOICES[getRandomIndex(SEX_CHOICES.length)],
-    headIndex: getRandomIndex(CHARACTER_OPTION_COUNT),
-    bodyIndex: getRandomIndex(CHARACTER_OPTION_COUNT),
-    feetIndex: getRandomIndex(CHARACTER_OPTION_COUNT),
+    sex,
+    headIndex: getRandomIndex(availableBodyParts.heads.length),
+    bodyIndex: getRandomIndex(availableBodyParts.bodies.length),
+    feetIndex: getRandomIndex(availableBodyParts.feet.length),
   }
 }
 
@@ -103,19 +132,31 @@ export function MainGame({ onRestart, onGameEnd }: MainGameProps) {
         onHeadClick={() =>
           setCharacterChoice((currentChoice) => ({
             ...currentChoice,
-            headIndex: currentChoice.headIndex + 1,
+            headIndex: getNextBodyPartIndex(
+              currentChoice.sex,
+              'heads',
+              currentChoice.headIndex,
+            ),
           }))
         }
         onBodyClick={() =>
           setCharacterChoice((currentChoice) => ({
             ...currentChoice,
-            bodyIndex: currentChoice.bodyIndex + 1,
+            bodyIndex: getNextBodyPartIndex(
+              currentChoice.sex,
+              'bodies',
+              currentChoice.bodyIndex,
+            ),
           }))
         }
         onFeetClick={() =>
           setCharacterChoice((currentChoice) => ({
             ...currentChoice,
-            feetIndex: currentChoice.feetIndex + 1,
+            feetIndex: getNextBodyPartIndex(
+              currentChoice.sex,
+              'feet',
+              currentChoice.feetIndex,
+            ),
           }))
         }
         onTimerComplete={() => {

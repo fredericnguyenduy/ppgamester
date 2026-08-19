@@ -1,7 +1,6 @@
 import sexChoiceUrl from '../../assets/screens/sex-choice.png'
+import type { SexChoice } from '../types/CharacterChoice'
 import './SexChoiceScreen.css'
-
-export type SexChoice = 'F' | 'M'
 
 type Percentage = `${number}%`
 

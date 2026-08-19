@@ -1,0 +1,12 @@
+{
+	"M": {
+		"heads": ["girl-head-0.png"],
+		"bodies": ["girl-body-0.png"],
+		"feet": ["girl-feet-0.png"]
+	},
+	"F": {
+		"heads": ["girl-head-0.png"],
+		"bodies": ["girl-body-0.png"],
+		"feet": ["girl-feet-0.png"]
+	}
+}

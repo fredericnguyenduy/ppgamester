@@ -104,9 +104,11 @@ context and decisions, not temporary progress notes.
 - `src/MainGame.tsx`: gameplay screen state and persistent `CharacterChoice`.
 - `src/types/CharacterChoice.ts`: shared persistent character-choice model.
 - `src/components/Character/`: reusable layered character assembled from head,
-  body, and feet image assets. Its current sizing, overlap, artwork, and label
-  are internal constants except for its scene-relative height and position; it
-  accepts the current choice and separate click callbacks for each part.
+  body, and feet image assets listed by sex in `assets/body-parts.json`. Part
+  indices wrap around their corresponding asset arrays. Its current sizing,
+  overlap, and label are internal constants except for its scene-relative
+  height and position; it accepts the current choice and separate click
+  callbacks for each part.
 - `src/components/Timer/`: reusable timer artwork with a percentage-positioned
   countdown display that starts at 100 and stops at zero.
 - `src/screens/`: screen components and their local styles.
