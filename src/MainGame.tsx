@@ -5,18 +5,16 @@ import { DressScreen } from './screens/DressScreen'
 import { FashionShowScreen } from './screens/FashionShowScreen'
 import { ScoreScreen } from './screens/ScoreScreen'
 import { SexChoiceScreen } from './screens/SexChoiceScreen'
+import type { BodyPart } from './types/BodyPart'
 import {
   SEX_CHOICES,
   type CharacterChoice,
   type SexChoice,
 } from './types/CharacterChoice'
 
-export type { CharacterChoice } from './types/CharacterChoice'
-
 type GamePhase = 'castle' | 'sex-choice' | 'dress' | 'fashion-show' | 'score'
 
 type CharacterChoices = CharacterChoice[]
-type BodyPart = keyof (typeof bodyParts)['F']
 
 const FASHION_SHOW_COUNT = 3
 

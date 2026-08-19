@@ -1,11 +1,10 @@
 import bodyParts from '../../../assets/body-parts.json'
+import type { BodyPart } from '../../types/BodyPart'
 import type {
   CharacterChoice,
   SexChoice,
 } from '../../types/CharacterChoice'
 import './Character.css'
-
-type BodyPart = 'heads' | 'bodies' | 'feet'
 
 type BodyParts = Record<BodyPart, string[]>
 

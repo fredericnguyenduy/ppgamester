@@ -103,6 +103,7 @@ context and decisions, not temporary progress notes.
 - `src/App.tsx`: application bootstrap state and title/loading/game composition.
 - `src/MainGame.tsx`: gameplay screen state and persistent `CharacterChoice`.
 - `src/types/CharacterChoice.ts`: shared persistent character-choice model.
+- `src/types/BodyPart.ts`: shared body-part key type.
 - `src/components/Character/`: reusable layered character assembled from head,
   body, and feet image assets listed by sex in `assets/body-parts.json`. Part
   indices wrap around their corresponding asset arrays. Its current sizing,
@@ -128,6 +129,8 @@ context and decisions, not temporary progress notes.
 - Do not edit generated `dist/` output or dependencies in `node_modules/`.
 - Use functional React components and explicit TypeScript types where inference
   is not clear.
+- Keep types used by more than one module under `src/types/` as their canonical
+  definitions. Keep component prop types colocated with their components.
 - Clean up timers, animations, and event handlers in React effect teardown.
 - Update this file when a dependency choice, directory boundary, data flow,
   rendering strategy, command, or product requirement changes.
