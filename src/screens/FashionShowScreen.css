@@ -1,0 +1,41 @@
+.fashion-show-screen {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  place-items: center;
+  background: #000;
+}
+
+.fashion-show-screen__scene {
+  position: relative;
+  width: min(100vw, calc(100vh * 16 / 9));
+  width: min(100vw, calc(100dvh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.fashion-show-screen__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  animation: catwalk-scroll 10s linear forwards;
+}
+
+@keyframes catwalk-scroll {
+  0% {
+    object-position: center top;
+  }
+
+  50% {
+    object-position: center bottom;
+  }
+
+  100% {
+    object-position: center top;
+  }
+}

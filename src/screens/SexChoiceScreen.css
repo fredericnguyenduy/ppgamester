@@ -1,0 +1,36 @@
+.sex-choice-screen {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  place-items: center;
+  background: #000;
+}
+
+.sex-choice-screen__stage {
+  position: relative;
+  width: min(100vw, calc(100vh * 16 / 9));
+  width: min(100vw, calc(100dvh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.sex-choice-screen__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sex-choice-screen__zone {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.sex-choice-screen__zone:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -3px;
+}
