@@ -10,11 +10,59 @@ export type { CharacterChoice } from './types/CharacterChoice'
 
 type GamePhase = 'castle' | 'sex-choice' | 'dress' | 'fashion-show' | 'score'
 
+type CharacterChoices = CharacterChoice[]
+
+const CHARACTER_OPTION_COUNT = 4
+const FASHION_SHOW_COUNT = 3
+const SEX_CHOICES = ['F', 'M'] as const
+
 const INITIAL_CHARACTER_CHOICE: CharacterChoice = {
   sex: null,
   headIndex: 0,
   bodyIndex: 0,
   feetIndex: 0,
+}
+
+function getRandomIndex(length: number): number {
+  return Math.floor(Math.random() * length)
+}
+
+function createRandomCharacterChoice(): CharacterChoice {
+  return {
+    sex: SEX_CHOICES[getRandomIndex(SEX_CHOICES.length)],
+    headIndex: getRandomIndex(CHARACTER_OPTION_COUNT),
+    bodyIndex: getRandomIndex(CHARACTER_OPTION_COUNT),
+    feetIndex: getRandomIndex(CHARACTER_OPTION_COUNT),
+  }
+}
+
+function createFashionShowChoices(
+  playerChoice: CharacterChoice,
+): CharacterChoices {
+  const choices = Array.from(
+    { length: FASHION_SHOW_COUNT - 1 },
+    () => createRandomCharacterChoice(),
+  )
+
+  choices.splice(getRandomIndex(choices.length + 1), 0, playerChoice)
+
+  return choices
+}
+
+function shuffleCharacterChoices(
+  choices: CharacterChoices,
+): CharacterChoices {
+  const shuffledChoices = [...choices]
+
+  for (let index = shuffledChoices.length - 1; index > 0; index -= 1) {
+    const randomIndex = getRandomIndex(index + 1)
+    const currentChoice = shuffledChoices[index]
+
+    shuffledChoices[index] = shuffledChoices[randomIndex]
+    shuffledChoices[randomIndex] = currentChoice
+  }
+
+  return shuffledChoices
 }
 
 type MainGameProps = {
@@ -27,7 +75,11 @@ export function MainGame({ onRestart, onGameEnd }: MainGameProps) {
   const [characterChoice, setCharacterChoice] = useState<CharacterChoice>(
     INITIAL_CHARACTER_CHOICE,
   )
-  const [scorePosition] = useState(() => Math.floor(Math.random() * 3))
+  const [fashionShowChoices, setFashionShowChoices] =
+    useState<CharacterChoices | null>(null)
+  const [fashionShowIndex, setFashionShowIndex] = useState(0)
+  const [scoreCharacterChoices, setScoreCharacterChoices] =
+    useState<CharacterChoices | null>(null)
 
   if (phase === 'castle') {
     return <CastleScreen onEnter={() => setPhase('sex-choice')} />
@@ -66,26 +118,39 @@ export function MainGame({ onRestart, onGameEnd }: MainGameProps) {
             feetIndex: currentChoice.feetIndex + 1,
           }))
         }
-        onTimerComplete={() => setPhase('fashion-show')}
+        onTimerComplete={() => {
+          setFashionShowChoices(createFashionShowChoices(characterChoice))
+          setFashionShowIndex(0)
+          setPhase('fashion-show')
+        }}
       />
     )
   }
 
-  if (phase === 'fashion-show') {
+  if (phase === 'fashion-show' && fashionShowChoices != null) {
     return (
       <FashionShowScreen
-        characterChoice={characterChoice}
-        onScrollComplete={() => setPhase('score')}
+        key={fashionShowIndex}
+        characterChoice={fashionShowChoices[fashionShowIndex]}
+        onScrollComplete={() => {
+          if (fashionShowIndex < fashionShowChoices.length - 1) {
+            setFashionShowIndex((currentIndex) => currentIndex + 1)
+            return
+          }
+
+          setScoreCharacterChoices(
+            shuffleCharacterChoices(fashionShowChoices),
+          )
+          setPhase('score')
+        }}
       />
     )
   }
 
-  if (phase === 'score') {
+  if (phase === 'score' && scoreCharacterChoices != null) {
     return (
       <ScoreScreen
-        characterChoices={[0, 1, 2].map((position) =>
-          position === scorePosition ? characterChoice : null,
-        )}
+        characterChoices={scoreCharacterChoices}
         onRestart={onRestart}
         onGameEnd={onGameEnd}
       />

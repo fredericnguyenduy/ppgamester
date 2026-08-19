@@ -41,19 +41,21 @@ context and decisions, not temporary progress notes.
   Its component accepts `CharacterChoice`; clicking the head, body, or feet
   increments that part's choice index. When the countdown reaches zero, the main
   game advances to the fashion-show screen.
-- The fashion-show screen displays `assets/screens/catwalk.png`, initially
-  aligned to its top. Scroll it to the bottom over five seconds and back to the
-  top over the following five seconds, running the round trip once. Fire the
-  screen's `onScrollComplete` callback when the animation finishes, then advance
-  to the score screen. Display the default layered character at the bottom
-  center using the same one-third-height sizing as the dress screen.
+- The fashion-show phase presents three consecutive fashion-show screens. Its
+  contestant trio contains the player's `CharacterChoice` at a random position
+  and two randomly generated choices whose sex and part indices use the
+  available options. Each screen displays `assets/screens/catwalk.png`, aligned
+  to its top, scrolls it to the bottom over five seconds and back to the top over
+  the following five seconds, and fires `onScrollComplete` when its round trip
+  finishes. The next contestant then starts from a freshly mounted screen; the
+  third completion advances to the score. Display each layered character at the
+  bottom center using the same one-third-height sizing as the dress screen.
 - The score screen displays `assets/screens/score.png` only while the main
-  game's active screen state is `score`. It accepts an array of nullable
-  `CharacterChoice` values and displays up to its first three non-null choices
-  at the configured podium positions, each at one-third of the scene height.
-  `MainGame` supplies its active character choice in one stable, randomly chosen
-  array position and `null` in the other two positions. After the score has
-  displayed for ten seconds, ask whether the player wants to play again. A
+  game's active screen state is `score`. It accepts the same three
+  `CharacterChoice` objects used for the fashion shows, shuffled into a new
+  random order, and displays them at the configured podium positions, each at
+  one-third of the scene height. After the score has displayed for ten seconds,
+  ask whether the player wants to play again. A
   positive response requests a restart; declining leaves the score displayed.
   Both responses propagate through `MainGame` to `App`; declining invokes the
   `onGameEnd` handler, which is currently a stub. The application remounts

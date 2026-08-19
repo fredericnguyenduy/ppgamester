@@ -5,7 +5,7 @@ import type { CharacterChoice } from '../types/CharacterChoice'
 import './ScoreScreen.css'
 
 type ScoreScreenProps = {
-  characterChoices: (CharacterChoice | null)[]
+  characterChoices: CharacterChoice[]
   onRestart: () => void
   onGameEnd: () => void
 }
@@ -42,10 +42,6 @@ export function ScoreScreen({
 
         {CHARACTER_POSITIONS.map((position, index) => {
           const characterChoice = characterChoices[index]
-
-          if (characterChoice == null) {
-            return null
-          }
 
           return (
             <Character
