@@ -5,8 +5,30 @@
 		"feet": ["girl-feet-0.png"]
 	},
 	"F": {
-		"heads": ["girl-head-0.png"],
-		"bodies": ["girl-body-0.png"],
-		"feet": ["girl-feet-0.png"]
+		"heads": [
+			"girl-head-0.png",
+			"girl-head-1.png",
+			"girl-head-2.png",
+			"girl-head-3.png",
+			"girl-head-4.png",
+			"girl-head-5.png",
+			"girl-head-6.png"
+		],
+		"bodies": [
+			"girl-body-0.png",
+			"girl-body-1.png",
+			"girl-body-2.png",
+			"girl-body-3.png",
+			"girl-body-4.png",
+			"girl-body-5.png"
+		],
+		"feet": [
+			"girl-feet-0.png",
+			"girl-feet-1.png",
+			"girl-feet-2.png",
+			"girl-feet-3.png",
+			"girl-feet-4.png",
+			"girl-feet-5.png"
+		]
 	}
 }

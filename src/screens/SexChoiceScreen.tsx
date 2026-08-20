@@ -52,6 +52,7 @@ export function SexChoiceScreen({ onSelect }: SexChoiceScreenProps) {
           className="sex-choice-screen__image"
           src={sexChoiceUrl}
           alt="Choose a character"
+          draggable={false}
         />
         {CHOICE_ZONES.map((zone) => (
           <button

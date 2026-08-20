@@ -34,12 +34,14 @@ export function TitleScreen({ onComplete }: TitleScreenProps) {
         className="title-screen__image"
         src={title1Url}
         alt="Princess & Prince Gamester title screen"
+        draggable={false}
         hidden={visibleImageIndex !== 0}
       />
       <img
         className="title-screen__image"
         src={title2Url}
         alt=""
+        draggable={false}
         hidden={visibleImageIndex !== 1}
       />
     </main>

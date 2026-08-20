@@ -1,0 +1,74 @@
+.dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 60%;
+  aspect-ratio: 4 / 3;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  container-type: inline-size;
+}
+
+.dialog__frame {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+}
+
+.dialog__prompt,
+.dialog__button {
+  position: absolute;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #f45120;
+  font-family: "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+  font-weight: 900;
+  text-align: center;
+}
+
+.dialog__prompt {
+  /* Normalized from (316, 368, 824, 254) within the 1448x1086 source. */
+  top: 33.88582%;
+  left: 21.823204%;
+  width: 56.906077%;
+  height: 23.388582%;
+  margin: 0;
+  font-size: 5cqi;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.dialog__button {
+  top: 65.19337%;
+  width: 30.455801%;
+  height: 13.075506%;
+  border: 0;
+  background: transparent;
+  color: #5c210b;
+  cursor: pointer;
+  font-size: 4.75cqi;
+  line-height: 1;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.dialog__button--first {
+  /* Normalized from (238, 708, 441, 142) within the 1448x1086 source. */
+  left: 16.436464%;
+}
+
+.dialog__button--second {
+  /* Normalized from (772, 708, 441, 142) within the 1448x1086 source. */
+  left: 53.314917%;
+}
+
+.dialog__button:focus-visible {
+  outline: 0.35cqi solid #fff;
+  outline-offset: -0.35cqi;
+}

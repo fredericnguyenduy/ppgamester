@@ -16,6 +16,7 @@ export function CastleScreen({ onEnter }: CastleScreenProps) {
         className="castle-screen__image"
         src={castleUrl}
         alt="Enter the castle"
+        draggable={false}
       />
     </button>
   )

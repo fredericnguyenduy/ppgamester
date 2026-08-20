@@ -21,6 +21,7 @@ export function FashionShowScreen({
           className="fashion-show-screen__image"
           src={catwalkUrl}
           alt="Fashion show catwalk"
+          draggable={false}
           onAnimationEnd={onScrollComplete}
         />
 

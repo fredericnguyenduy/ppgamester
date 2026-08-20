@@ -23,6 +23,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
         className="loading-screen__image"
         src={loadingUrl}
         alt="Princess & Prince Gamester loading screen"
+        draggable={false}
       />
     </main>
   )

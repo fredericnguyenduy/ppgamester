@@ -29,6 +29,7 @@ export function DressScreen({
           className="dress-screen__image"
           src={dressUrl}
           alt="Choose an outfit"
+          draggable={false}
         />
 
         <div className="dress-screen__timer-frame">

@@ -25,6 +25,13 @@ context and decisions, not temporary progress notes.
   application to display the loading screen after five seconds.
 - The loading screen displays `assets/screens/loading.png` for five seconds,
   then signals the application to bootstrap the main game.
+- The reusable dialog displays `assets/dialog-frame.png`, accepts a prompt and
+  two button labels, and reports activation of either button through separate
+  callbacks. It is centered in the scene at 60% of the scene width, preserving
+  the artwork's aspect ratio, and its text and hit zones remain aligned to the
+  responsive artwork. Relative to the 1448x1086 source, the first button is at
+  `(238, 708, 441, 142)` and the second is at `(772, 708, 441, 142)`, with each
+  tuple representing `(x, y, width, height)`.
 - The main game owns a typed `CharacterChoice` object containing the nullable
   sex choice and integer indices for the selected head, body, and feet, and its
   own active-screen state. All indices initially start at zero.
@@ -55,8 +62,8 @@ context and decisions, not temporary progress notes.
   `CharacterChoice` objects used for the fashion shows, shuffled into a new
   random order, and displays them at the configured podium positions, each at
   one-third of the scene height. After the score has displayed for ten seconds,
-  ask whether the player wants to play again. A
-  positive response requests a restart; declining leaves the score displayed.
+  display the reusable dialog asking `もういっかいしますか？`; `はい` requests
+  a restart and `いいえ` ends the game while leaving the score displayed.
   Both responses propagate through `MainGame` to `App`; declining invokes the
   `onGameEnd` handler, which is currently a stub. The application remounts
   `MainGame` for a restart so gameplay state resets without replaying the title
@@ -65,6 +72,7 @@ context and decisions, not temporary progress notes.
   largest size that fits the viewport and use page-background padding
   (letterboxing or pillarboxing) when the display has a different aspect ratio.
 - Keep the scene responsive and usable with pointer and touch input.
+- Prevent every rendered image from being dragged or selected.
 - Keep `npm run lint` and `npm run build` passing.
 
 ## Architecture decisions
@@ -112,6 +120,8 @@ context and decisions, not temporary progress notes.
   callbacks for each part.
 - `src/components/Timer/`: reusable timer artwork with a percentage-positioned
   countdown display that starts at 100 and stops at zero.
+- `src/components/Dialog/`: reusable dialog-frame artwork with a centered,
+  wrapping prompt and two responsive native-button hit zones.
 - `src/screens/`: screen components and their local styles.
 - `src/index.css`: global full-viewport reset and letterbox background.
 - `assets/screens/`: source screen artwork imported through Vite.

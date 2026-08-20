@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import scoreUrl from '../../assets/screens/score.png'
 import { Character } from '../components/Character'
+import { Dialog } from '../components/Dialog'
 import type { CharacterChoice } from '../types/CharacterChoice'
 import './ScoreScreen.css'
 
@@ -23,22 +24,25 @@ export function ScoreScreen({
   onRestart,
   onGameEnd,
 }: ScoreScreenProps) {
+  const [isConfirmationVisible, setIsConfirmationVisible] = useState(false)
+
   useEffect(() => {
     const confirmationTimer = window.setTimeout(() => {
-      if (window.confirm('Would you like to play again?')) {
-        onRestart()
-      } else {
-        onGameEnd()
-      }
+      setIsConfirmationVisible(true)
     }, 10_000)
 
     return () => window.clearTimeout(confirmationTimer)
-  }, [onRestart, onGameEnd])
+  }, [])
 
   return (
     <main className="score-screen">
       <div className="score-screen__scene">
-        <img className="score-screen__image" src={scoreUrl} alt="Final score" />
+        <img
+          className="score-screen__image"
+          src={scoreUrl}
+          alt="Final score"
+          draggable={false}
+        />
 
         {CHARACTER_POSITIONS.map((position, index) => {
           const characterChoice = characterChoices[index]
@@ -57,6 +61,15 @@ export function ScoreScreen({
           )
         })}
 
+        {isConfirmationVisible && (
+          <Dialog
+            prompt="もういっかいしますか？"
+            label1="はい"
+            label2="いいえ"
+            onButton1Click={onRestart}
+            onButton2Click={onGameEnd}
+          />
+        )}
       </div>
     </main>
   )
