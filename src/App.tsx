@@ -3,13 +3,12 @@ import { MainGame } from './MainGame'
 import { LoadingScreen } from './screens/LoadingScreen'
 import { TitleScreen } from './screens/TitleScreen'
 
-type AppPhase = 'title' | 'loading' | 'game'
-
-const handleGameEnd = () => undefined
+type AppPhase = 'title' | 'loading' | 'game' | 'end'
 
 function App() {
   const [phase, setPhase] = useState<AppPhase>('title')
   const [gameKey, setGameKey] = useState(0)
+  const handleGameEnd = () => setPhase('end')
 
   if (phase === 'title') {
     return <TitleScreen onComplete={() => setPhase('loading')} />

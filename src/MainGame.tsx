@@ -51,6 +51,25 @@ function getNextBodyPartIndex(
   return ((currentIndex + 1) % optionCount + optionCount) % optionCount
 }
 
+function createCharacterChoiceKey(choice: CharacterChoice): string {
+  return [choice.sex, choice.headIndex, choice.bodyIndex, choice.feetIndex].join(
+    ':',
+  )
+}
+
+function getAvailableCharacterChoiceCount(): number {
+  return SEX_CHOICES.reduce((total, sex) => {
+    const availableBodyParts = bodyParts[sex]
+
+    return (
+      total +
+      availableBodyParts.heads.length *
+        availableBodyParts.bodies.length *
+        availableBodyParts.feet.length
+    )
+  }, 0)
+}
+
 function createRandomCharacterChoice(): CharacterChoice {
   const sex = SEX_CHOICES[getRandomIndex(SEX_CHOICES.length)]
   const availableBodyParts = bodyParts[sex]
@@ -66,10 +85,24 @@ function createRandomCharacterChoice(): CharacterChoice {
 function createFashionShowChoices(
   playerChoice: CharacterChoice,
 ): CharacterChoices {
-  const choices = Array.from(
-    { length: FASHION_SHOW_COUNT - 1 },
-    () => createRandomCharacterChoice(),
-  )
+  if (getAvailableCharacterChoiceCount() < FASHION_SHOW_COUNT) {
+    throw new Error('Not enough unique character choices are available')
+  }
+
+  const choices: CharacterChoices = []
+  const usedChoiceKeys = new Set([createCharacterChoiceKey(playerChoice)])
+
+  while (choices.length < FASHION_SHOW_COUNT - 1) {
+    const randomChoice = createRandomCharacterChoice()
+    const randomChoiceKey = createCharacterChoiceKey(randomChoice)
+
+    if (usedChoiceKeys.has(randomChoiceKey)) {
+      continue
+    }
+
+    usedChoiceKeys.add(randomChoiceKey)
+    choices.push(randomChoice)
+  }
 
   choices.splice(getRandomIndex(choices.length + 1), 0, playerChoice)
 

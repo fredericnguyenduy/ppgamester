@@ -51,9 +51,11 @@ context and decisions, not temporary progress notes.
 - The fashion-show phase presents three consecutive fashion-show screens. Its
   contestant trio contains the player's `CharacterChoice` at a random position
   and two randomly generated choices whose sex and part indices use the
-  available options. Each screen displays `assets/screens/catwalk.png`, aligned
-  to its top, scrolls it to the bottom over five seconds and back to the top over
-  the following five seconds, and fires `onScrollComplete` when its round trip
+  available options. All three choices must be distinct; enforce uniqueness by
+  tracking only the selected choice keys rather than enumerating every possible
+  combination. Each screen displays `assets/screens/catwalk.png`, aligned to its
+  top, scrolls it to the bottom over five seconds and back to the top over the
+  following five seconds, and fires `onScrollComplete` when its round trip
   finishes. The next contestant then starts from a freshly mounted screen; the
   third completion advances to the score. Display each layered character at the
   bottom center using the same one-third-height sizing as the dress screen.
@@ -65,9 +67,9 @@ context and decisions, not temporary progress notes.
   display the reusable dialog asking `もういっかいしますか？`; `はい` requests
   a restart and `いいえ` ends the game while leaving the score displayed.
   Both responses propagate through `MainGame` to `App`; declining invokes the
-  `onGameEnd` handler, which is currently a stub. The application remounts
-  `MainGame` for a restart so gameplay state resets without replaying the title
-  and loading screens.
+  `onGameEnd` handler, which enters an empty `end` application phase. The
+  application remounts `MainGame` for a restart so gameplay state resets
+  without replaying the title and loading screens.
 - Lay out every scene at a 16:9 aspect ratio. Scale its DOM container to the
   largest size that fits the viewport and use page-background padding
   (letterboxing or pillarboxing) when the display has a different aspect ratio.
@@ -78,10 +80,10 @@ context and decisions, not temporary progress notes.
 ## Architecture decisions
 
 - React owns the full-viewport frame and screen composition.
-- Keep `App.tsx` small: it owns the bootstrap phase (`title`, `loading`, or
-  `game`). Screens signal completion through callback props instead of changing
-  the browser URL. It renders the main game only for the explicit `game` phase
-  and renders nothing by default.
+- Keep `App.tsx` small: it owns the application phase (`title`, `loading`,
+  `game`, or `end`). Screens signal completion through callback props instead
+  of changing the browser URL. It renders the main game only for the explicit
+  `game` phase and renders nothing during `end` or for an unknown phase.
 - `MainGame.tsx` owns both the typed persistent `CharacterChoice` object and the
   active gameplay screen. Gameplay progresses from castle to sex choice, dress,
   fashion show, and score through screen callback events. It reports restart

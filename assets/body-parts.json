@@ -1,8 +1,18 @@
 {
 	"M": {
-		"heads": ["girl-head-0.png"],
-		"bodies": ["girl-body-0.png"],
-		"feet": ["girl-feet-0.png"]
+		"heads": [
+			"boy-head-0.png",
+			"boy-head-1.png",
+			"boy-head-2.png",
+			"boy-head-3.png",
+			"boy-head-4.png"
+		],
+		"bodies": [
+			"boy-body-0.png"
+		],
+		"feet": [
+			"boy-feet-0.png"
+		]
 	},
 	"F": {
 		"heads": [
