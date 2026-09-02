@@ -32,6 +32,10 @@ context and decisions, not temporary progress notes.
   responsive artwork. Relative to the 1448x1086 source, the first button is at
   `(238, 708, 441, 142)` and the second is at `(772, 708, 441, 142)`, with each
   tuple representing `(x, y, width, height)`.
+- The reusable control pad displays `assets/control-pad.png` in the bottom-right
+  corner of the scene at one-sixth of the scene width. It exposes `onUp`,
+  `onLeft`, `onRight`, and `onBottom` callback props wired to transparent hit
+  zones normalized from the visible button artwork in the 1254x1254 source.
 - The main game owns a typed `CharacterChoice` object containing the nullable
   sex choice and integer indices for the selected head, body, and feet, and its
   own active-screen state. All indices initially start at zero.
@@ -45,9 +49,12 @@ context and decisions, not temporary progress notes.
 - The dress screen displays `assets/screens/dress.png` with the default layered
   character centered along its bottom edge at one-third of the scene height and
   the countdown timer in the top-right corner at one-tenth of the scene width.
-  Its component accepts `CharacterChoice`; clicking the head, body, or feet
-  increments that part's choice index. When the countdown reaches zero, the main
-  game advances to the fashion-show screen.
+  It renders the reusable control pad in the bottom-right corner. Its component
+  accepts `CharacterChoice`; clicking the head, body, or feet increments that
+  part's choice index. The control pad moves the character by a fixed
+  five-percentage-point scene step: up and bottom change `top`, while left and
+  right change `left`. When the countdown reaches zero, the main game advances
+  to the fashion-show screen.
 - The fashion-show phase presents three consecutive fashion-show screens. Its
   contestant trio contains the player's `CharacterChoice` at a random position
   and two randomly generated choices whose sex and part indices use the
@@ -124,6 +131,8 @@ context and decisions, not temporary progress notes.
   countdown display that starts at 100 and stops at zero.
 - `src/components/Dialog/`: reusable dialog-frame artwork with a centered,
   wrapping prompt and two responsive native-button hit zones.
+- `src/components/ControlPad/`: reusable bottom-right control-pad artwork with
+  four responsive native-button hit zones.
 - `src/screens/`: screen components and their local styles.
 - `src/index.css`: global full-viewport reset and letterbox background.
 - `assets/screens/`: source screen artwork imported through Vite.
