@@ -1,0 +1,57 @@
+.clothes-shop-screen {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  place-items: center;
+  background: #000;
+}
+
+.clothes-shop-screen__scene {
+  position: relative;
+  width: min(100vw, calc(100vh * 16 / 9));
+  width: min(100vw, calc(100dvh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  max-height: 100vh;
+  max-height: 100dvh;
+}
+
+.clothes-shop-screen__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.clothes-shop-screen__shelf {
+  position: absolute;
+  z-index: 4;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.clothes-shop-screen__shelf--left {
+  /* Visually identified bounds (180, 48, 429, 576) in the 1672x941 artwork. */
+  left: calc(180 / 1672 * 100%);
+  top: calc(48 / 941 * 100%);
+  width: calc(429 / 1672 * 100%);
+  height: calc(576 / 941 * 100%);
+}
+
+.clothes-shop-screen__shelf--right {
+  /* Visually identified bounds (1060, 48, 433, 576) in the 1672x941 artwork. */
+  left: calc(1060 / 1672 * 100%);
+  top: calc(48 / 941 * 100%);
+  width: calc(433 / 1672 * 100%);
+  height: calc(576 / 941 * 100%);
+}
+
+.clothes-shop-screen__shelf:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -3px;
+  box-shadow: inset 0 0 0 6px #71365e;
+}

@@ -1,18 +1,16 @@
 import { useState } from 'react'
 import bodyParts from '../assets/body-parts.json'
 import { CastleScreen } from './screens/CastleScreen'
-import { DressScreen } from './screens/DressScreen'
+import { Shopping } from './Shopping'
 import { FashionShowScreen } from './screens/FashionShowScreen'
 import { ScoreScreen } from './screens/ScoreScreen'
 import { SexChoiceScreen } from './screens/SexChoiceScreen'
-import type { BodyPart } from './types/BodyPart'
 import {
   SEX_CHOICES,
   type CharacterChoice,
-  type SexChoice,
 } from './types/CharacterChoice'
 
-type GamePhase = 'castle' | 'sex-choice' | 'dress' | 'fashion-show' | 'score'
+type GamePhase = 'castle' | 'sex-choice' | 'shopping' | 'fashion-show' | 'score'
 
 type CharacterChoices = CharacterChoice[]
 
@@ -31,24 +29,6 @@ function getRandomIndex(length: number): number {
   }
 
   return Math.floor(Math.random() * length)
-}
-
-function getNextBodyPartIndex(
-  sex: SexChoice | null,
-  bodyPart: BodyPart,
-  currentIndex: number,
-): number {
-  if (sex == null) {
-    return 0
-  }
-
-  const optionCount = bodyParts[sex][bodyPart].length
-
-  if (optionCount === 0) {
-    return 0
-  }
-
-  return ((currentIndex + 1) % optionCount + optionCount) % optionCount
 }
 
 function createCharacterChoiceKey(choice: CharacterChoice): string {
@@ -150,46 +130,16 @@ export function MainGame({ onRestart, onGameEnd }: MainGameProps) {
       <SexChoiceScreen
         onSelect={(sex) => {
           setCharacterChoice((currentChoice) => ({ ...currentChoice, sex }))
-          setPhase('dress')
+          setPhase('shopping')
         }}
       />
     )
   }
 
-  if (phase === 'dress') {
+  if (phase === 'shopping') {
     return (
-      <DressScreen
+      <Shopping
         characterChoice={characterChoice}
-        onHeadClick={() =>
-          setCharacterChoice((currentChoice) => ({
-            ...currentChoice,
-            headIndex: getNextBodyPartIndex(
-              currentChoice.sex,
-              'heads',
-              currentChoice.headIndex,
-            ),
-          }))
-        }
-        onBodyClick={() =>
-          setCharacterChoice((currentChoice) => ({
-            ...currentChoice,
-            bodyIndex: getNextBodyPartIndex(
-              currentChoice.sex,
-              'bodies',
-              currentChoice.bodyIndex,
-            ),
-          }))
-        }
-        onFeetClick={() =>
-          setCharacterChoice((currentChoice) => ({
-            ...currentChoice,
-            feetIndex: getNextBodyPartIndex(
-              currentChoice.sex,
-              'feet',
-              currentChoice.feetIndex,
-            ),
-          }))
-        }
         onTimerComplete={() => {
           setFashionShowChoices(createFashionShowChoices(characterChoice))
           setFashionShowIndex(0)

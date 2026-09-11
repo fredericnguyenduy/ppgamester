@@ -17,8 +17,6 @@ const CHARACTER_POSITIONS = [
   { left: (1135 / 1672) * 100, top: (645 / 941) * 100 + 2 },
 ] as const
 
-const ignoreClick = () => undefined
-
 export function ScoreScreen({
   characterChoices,
   onRestart,
@@ -54,9 +52,6 @@ export function ScoreScreen({
               size={100 / 3}
               top={position.top}
               left={position.left}
-              onHeadClick={ignoreClick}
-              onBodyClick={ignoreClick}
-              onFeetClick={ignoreClick}
             />
           )
         })}

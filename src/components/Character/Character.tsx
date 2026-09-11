@@ -66,9 +66,6 @@ export type CharacterProps = {
   size: number
   top: number
   left: number
-  onHeadClick: () => void
-  onBodyClick: () => void
-  onFeetClick: () => void
 }
 
 export function Character({
@@ -76,9 +73,6 @@ export function Character({
   size,
   top,
   left,
-  onHeadClick,
-  onBodyClick,
-  onFeetClick,
 }: CharacterProps) {
   const headUrl = getBodyPartUrl(
     characterChoice.sex,
@@ -107,34 +101,31 @@ export function Character({
       data-body-index={characterChoice.bodyIndex}
       data-feet-index={characterChoice.feetIndex}
     >
-      <button
+      <div
         className="character__part character__head"
-        type="button"
+        role="img"
         aria-label={`Head option ${characterChoice.headIndex}`}
-        onClick={onHeadClick}
       >
         {headUrl != null && <img src={headUrl} alt="" draggable={false} />}
-      </button>
+      </div>
 
-      <button
+      <div
         className="character__part character__body"
         style={{ marginTop: `-${CHARACTER_HEAD_BODY_OVERLAP}` }}
-        type="button"
+        role="img"
         aria-label={`Body option ${characterChoice.bodyIndex}`}
-        onClick={onBodyClick}
       >
         {bodyUrl != null && <img src={bodyUrl} alt="" draggable={false} />}
-      </button>
+      </div>
 
-      <button
+      <div
         className="character__part character__feet"
         style={{ marginTop: `-${CHARACTER_BODY_FEET_OVERLAP}` }}
-        type="button"
+        role="img"
         aria-label={`Feet option ${characterChoice.feetIndex}`}
-        onClick={onFeetClick}
       >
         {feetUrl != null && <img src={feetUrl} alt="" draggable={false} />}
-      </button>
+      </div>
     </div>
   )
 }
