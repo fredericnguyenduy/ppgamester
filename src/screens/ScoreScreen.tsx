@@ -12,9 +12,9 @@ type ScoreScreenProps = {
 }
 
 const CHARACTER_POSITIONS = [
-  { left: (832 / 1672) * 100, top: (562 / 941) * 100 + 1.15 },
-  { left: (518 / 1672) * 100, top: (625 / 941) * 100 + 1 },
-  { left: (1135 / 1672) * 100, top: (645 / 941) * 100 + 2 },
+  { left: (832 / 1672) * 100, top: (562 / 941) * 100 + 0.15 },
+  { left: (518 / 1672) * 100, top: (625 / 941) * 100 },
+  { left: (1135 / 1672) * 100, top: (645 / 941) * 100 },
 ] as const
 
 export function ScoreScreen({
