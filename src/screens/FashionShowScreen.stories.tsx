@@ -8,9 +8,7 @@ const meta = {
   args: {
     characterChoice: {
       sex: 'M',
-      headIndex: 1,
-      bodyIndex: 0,
-      feetIndex: 0,
+      layers: [],
     },
     onScrollComplete: fn(),
   },

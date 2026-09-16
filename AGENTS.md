@@ -47,8 +47,9 @@ context and decisions, not temporary progress notes.
   left/right interiors `(253, 459, 139, 134)` / `(1056, 459, 139, 134)`, and
   cancel/OK faces `(378, 766, 306, 106)` / `(766, 766, 302, 106)`.
 - The main game owns a typed `CharacterChoice` object containing the nullable
-  sex choice and integer indices for the selected head, body, and feet, and its
-  own active-screen state. All indices initially start at zero.
+  sex choice (`F`, `M`, or `null`) and a `layers` array, and its own active-screen
+  state. Each layer has a string `file` and numeric `x`, `y`, `size`, and
+  `zIndex`. Layers initially start empty; layer selection is deferred.
 - The castle screen displays `assets/screens/castle.png` and advances to the
   sex-choice screen when activated by pointer, touch, or keyboard.
 - The sex-choice screen displays `assets/screens/sex-choice.png`. Its female
@@ -83,14 +84,12 @@ context and decisions, not temporary progress notes.
   It has no exit interaction yet.
 - The fashion-show phase presents three consecutive fashion-show screens. Its
   contestant trio contains the player's `CharacterChoice` at a random position
-  and two randomly generated choices whose sex and part indices use the
-  available options. All three choices must be distinct; enforce uniqueness by
-  tracking only the selected choice keys rather than enumerating every possible
-  combination. Each screen displays `assets/screens/catwalk.png`, aligned to its
-  top, scrolls it to the bottom over five seconds and back to the top over the
+  and two randomly generated choices with a sex and empty layers. Distinct
+  contestant appearances are deferred until layer selection is implemented.
+  Each screen displays `assets/screens/catwalk.png`, aligned to its top, scrolls it to the bottom over five seconds and back to the top over the
   following five seconds, and fires `onScrollComplete` when its round trip
   finishes. The next contestant then starts from a freshly mounted screen; the
-  third completion advances to the score. Display each layered character at the
+  third completion advances to the score. Place each character container at the
   bottom center using the same one-third-height sizing as the outside-shops screen.
 - The score screen displays `assets/screens/score.png` only while the main
   game's active screen state is `score`. It accepts the same three
@@ -108,6 +107,11 @@ context and decisions, not temporary progress notes.
   (letterboxing or pillarboxing) when the display has a different aspect ratio.
 - Keep the scene responsive and usable with pointer and touch input.
 - Prevent every rendered image from being dragged or selected.
+- Crop PNGs in `assets/character-parts/` to artwork bounds, ignoring pixels
+  with opacity at or below 5% when measuring bounds. Preserve pixels inside
+  the crop. For `template-boy.png` and `template-girl.png`, add transparent
+  padding on each side equal to 10% of the cropped width or height, rounded
+  to the nearest whole pixel.
 - Keep `npm run lint` and `npm run build` passing.
 
 ## Architecture decisions
@@ -149,13 +153,35 @@ context and decisions, not temporary progress notes.
   to `ClothesShopScreen`, plus persistent character placement, controls, and timer.
 - `src/types/CharacterChoice.ts`: shared persistent character-choice model.
 - `src/types/CharacterPosition.ts`: shared scene-relative character position.
-- `src/types/BodyPart.ts`: shared body-part key type.
-- `src/components/Character/`: reusable layered character assembled from head,
-  body, and feet image assets listed by sex in `assets/body-parts.json`. Part
-  indices wrap around their corresponding asset arrays. Its current sizing,
-  overlap, and label are internal constants except for its scene-relative
-  height and position; it accepts the current choice and renders noninteractive
-  parts without click callbacks.
+- `src/components/Character/`: scene-positioned character container, preserving
+  percentage-based `size`, `top`, and `left` and bottom-center anchoring. It uses
+  assets from `assets/character-parts/`: `template-boy.png` for sex `M` and
+  `template-girl.png` for `F`; the entire component returns `null` when sex is
+  `null`. The template uses height `100%` and width `auto`, determining the
+  container width from its natural aspect ratio at the height set by `size`.
+  It renders at z-index zero; layers do not affect the container dimensions.
+  The character container has no fixed aspect ratio; the old `75 / 164`
+  constraint has been removed.
+  Each layer renders an image resolved by Vite relative to
+  `assets/character-parts/`. Its `size` sets height as a percentage of the
+  character container height; `x` and `y` locate the image center as percentages
+  of container width and height, using `translate(-50%, -50%)` on the layer.
+  Layer images preserve their aspect ratio and use
+  `zIndex` for CSS stacking order.
+  Its default Storybook story exposes all props and a live editor starting with
+  empty layers, size/top `100`, and left `50`. Users can add/remove arbitrary numbers of layers, choose files
+  from `assets/character-parts/`, and edit each layer's `x`, `y`, `size`, and
+  `zIndex`. Editor changes update Storybook args.
+  Character stories place the 16:9 preview on the left and an independently
+  scrollable editor on the right, keeping the preview visible while editing.
+  The `Girl` story starts with sex `F`, size/top `100`, left `50`, and the
+  configured girl dress, face, hair, and shoes layers, using the same live editor.
+  Its layer `(x, y, size)` values are dress `(50, 52, 49)`, face `(50, 18, 7)`,
+  hair `(50, 15, 19)`, and shoes `(50, 89, 9)`.
+  The `Boy` story uses the same editor with sex `M`, size/top `100`, left `50`.
+  Its layer `(x, y, size, zIndex)` values are `boy-costume-1.png`
+  `(50, 51, 50, 2)`, `boy-face-1.png` `(50, 18, 7, 1)`, `boy-feet-1.png`
+  `(50, 83, 22, 1)`, and `boy-hair-1.png` `(50, 12, 19, 1)`.
 - `src/components/Timer/`: reusable timer artwork with a percentage-positioned
   countdown display that starts at 100 and stops at zero.
 - `src/components/Dialog/`: reusable dialog-frame artwork with a centered,

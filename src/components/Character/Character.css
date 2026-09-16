@@ -1,37 +1,23 @@
 .character {
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   width: auto;
-  aspect-ratio: 75 / 164;
   transform: translate(-50%, -100%);
 }
 
-.character__part {
+.character__template {
   position: relative;
-  display: flex;
-  width: 100%;
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: center;
-}
-
-.character__part img {
+  z-index: 0;
   display: block;
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 100%;
+  object-fit: contain;
   user-select: none;
 }
 
-.character__head {
-  z-index: 3;
-}
-
-.character__body {
-  z-index: 2;
-}
-
-.character__feet {
-  z-index: 1;
+.character__layer {
+  position: absolute;
+  display: block;
+  width: auto;
+  transform: translate(-50%, -50%);
+  user-select: none;
 }

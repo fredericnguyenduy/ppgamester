@@ -9,21 +9,15 @@ const meta = {
     characterChoices: [
       {
         sex: 'F',
-        headIndex: 0,
-        bodyIndex: 0,
-        feetIndex: 0,
+        layers: [],
       },
       {
         sex: 'M',
-        headIndex: 2,
-        bodyIndex: 0,
-        feetIndex: 0,
+        layers: [],
       },
       {
         sex: 'F',
-        headIndex: 3,
-        bodyIndex: 2,
-        feetIndex: 4,
+        layers: [],
       },
     ],
     onRestart: fn(),
