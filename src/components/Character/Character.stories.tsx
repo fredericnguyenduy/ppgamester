@@ -212,9 +212,9 @@ export const Boy: Story = {
     characterChoice: {
       sex: "M",
       layers: [
-        { file: "boy-costume-1.png", x: 50, y: 51, size: 50, zIndex: 2 },
+        { file: "boy-costume-1.png", x: 50, y: 52, size: 53, zIndex: 2 },
         { file: "boy-face-1.png", x: 50, y: 18, size: 7, zIndex: 1 },
-        { file: "boy-feet-1.png", x: 50, y: 83, size: 22, zIndex: 1 },
+        { file: "boy-feet-1.png", x: 50, y: 82, size: 24, zIndex: 1 },
         { file: "boy-hair-1.png", x: 50, y: 12, size: 19, zIndex: 1 },
       ],
     },

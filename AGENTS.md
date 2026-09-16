@@ -180,8 +180,8 @@ context and decisions, not temporary progress notes.
   hair `(50, 15, 19)`, and shoes `(50, 89, 9)`.
   The `Boy` story uses the same editor with sex `M`, size/top `100`, left `50`.
   Its layer `(x, y, size, zIndex)` values are `boy-costume-1.png`
-  `(50, 51, 50, 2)`, `boy-face-1.png` `(50, 18, 7, 1)`, `boy-feet-1.png`
-  `(50, 83, 22, 1)`, and `boy-hair-1.png` `(50, 12, 19, 1)`.
+  `(50, 52, 53, 2)`, `boy-face-1.png` `(50, 18, 7, 1)`, `boy-feet-1.png`
+  `(50, 82, 24, 1)`, and `boy-hair-1.png` `(50, 12, 19, 1)`.
 - `src/components/Timer/`: reusable timer artwork with a percentage-positioned
   countdown display that starts at 100 and stops at zero.
 - `src/components/Dialog/`: reusable dialog-frame artwork with a centered,
