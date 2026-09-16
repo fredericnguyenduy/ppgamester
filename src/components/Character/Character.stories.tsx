@@ -206,16 +206,16 @@ export const Default: Story = {};
 
 export const Boy: Story = {
   args: {
-    size: 100,
-    top: 100,
+    size: 83.5,
+    top: 91.6458229115,
     left: 50,
     characterChoice: {
       sex: "M",
       layers: [
-        { file: "boy-costume-1.png", x: 50, y: 52, size: 53, zIndex: 2 },
-        { file: "boy-face-1.png", x: 50, y: 18, size: 7, zIndex: 1 },
-        { file: "boy-feet-1.png", x: 50, y: 82, size: 24, zIndex: 1 },
-        { file: "boy-hair-1.png", x: 50, y: 12, size: 19, zIndex: 1 },
+        { file: "boy-costume-1.png", x: 50, y: 52.5, size: 63.75, zIndex: 2 },
+        { file: "boy-face-1.png", x: 50, y: 11.75, size: 8.5, zIndex: 1 },
+        { file: "boy-feet-1.png", x: 50, y: 88.5, size: 29, zIndex: 1 },
+        { file: "boy-hair-1.png", x: 50, y: 4.5, size: 22, zIndex: 1 },
       ],
     },
   },
@@ -223,16 +223,16 @@ export const Boy: Story = {
 
 export const Girl: Story = {
   args: {
-    size: 100,
-    top: 100,
+    size: 83.5,
+    top: 91.6452442159,
     left: 50,
     characterChoice: {
       sex: "F",
       layers: [
-        { file: "girl-dress-1.png", x: 50, y: 52, size: 49, zIndex: 0 },
-        { file: "girl-face-1.png", x: 50, y: 18, size: 7, zIndex: 1 },
-        { file: "girl-hair-1.png", x: 50, y: 15, size: 19, zIndex: 1 },
-        { file: "girl-shoes-1.png", x: 50, y: 89, size: 9, zIndex: 1 },
+        { file: "girl-dress-1.png", x: 50, y: 52.5, size: 59, zIndex: 0 },
+        { file: "girl-face-1.png", x: 50, y: 11.75, size: 8.5, zIndex: 1 },
+        { file: "girl-hair-1.png", x: 50, y: 8, size: 23, zIndex: 1 },
+        { file: "girl-shoes-1.png", x: 50, y: 97, size: 12.5, zIndex: 1 },
       ],
     },
   },

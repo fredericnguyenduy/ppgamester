@@ -109,9 +109,8 @@ context and decisions, not temporary progress notes.
 - Prevent every rendered image from being dragged or selected.
 - Crop PNGs in `assets/character-parts/` to artwork bounds, ignoring pixels
   with opacity at or below 5% when measuring bounds. Preserve pixels inside
-  the crop. For `template-boy.png` and `template-girl.png`, add transparent
-  padding on each side equal to 10% of the cropped width or height, rounded
-  to the nearest whole pixel.
+  the crop. Templates are also tightly cropped, with no added padding:
+  `template-boy.png` is 855x1665 and `template-girl.png` is 887x1740.
 - Keep `npm run lint` and `npm run build` passing.
 
 ## Architecture decisions
@@ -174,14 +173,13 @@ context and decisions, not temporary progress notes.
   `zIndex`. Editor changes update Storybook args.
   Character stories place the 16:9 preview on the left and an independently
   scrollable editor on the right, keeping the preview visible while editing.
-  The `Girl` story starts with sex `F`, size/top `100`, left `50`, and the
-  configured girl dress, face, hair, and shoes layers, using the same live editor.
-  Its layer `(x, y, size)` values are dress `(50, 52, 49)`, face `(50, 18, 7)`,
-  hair `(50, 15, 19)`, and shoes `(50, 89, 9)`.
-  The `Boy` story uses the same editor with sex `M`, size/top `100`, left `50`.
-  Its layer `(x, y, size, zIndex)` values are `boy-costume-1.png`
-  `(50, 52, 53, 2)`, `boy-face-1.png` `(50, 18, 7, 1)`, `boy-feet-1.png`
-  `(50, 82, 24, 1)`, and `boy-hair-1.png` `(50, 12, 19, 1)`.
+  The `Girl` and `Boy` stories use the same editor with their respective sex
+  and configured clothing, face, hair, and footwear layers. Their layer
+  coordinates are relative to the tightly cropped templates. Story size is
+  `83.5`, top is approximately `91.65`, and left is `50`. Story `x`, `y`, and
+  `size` values are rounded upward to multiples of `0.25` after compensating
+  for removed template padding. Exact values live in `Character.stories.tsx`;
+  z-index values remain unchanged.
 - `src/components/Timer/`: reusable timer artwork with a percentage-positioned
   countdown display that starts at 100 and stops at zero.
 - `src/components/Dialog/`: reusable dialog-frame artwork with a centered,
