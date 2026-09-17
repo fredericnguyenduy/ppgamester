@@ -36,7 +36,7 @@ context and decisions, not temporary progress notes.
   corner of the scene at one-sixth of the scene width. It exposes `onUp`,
   `onLeft`, `onRight`, and `onBottom` callback props wired to transparent hit
   zones normalized from the visible button artwork in the 1254x1254 source.
-- The reusable `PartSelector` is centered at 25% of the scene width and displays
+- The reusable `PartSelector` is centered at 60% of the scene width and displays
   `assets/part-selector.png`. It accepts an array of image URLs, `onCancel`, and
   `onOk(selectedIndex)`, with an internal zero-based index initially set to zero.
   Previous/next buttons display `selector-left.png` / `selector-right.png` only
@@ -49,7 +49,8 @@ context and decisions, not temporary progress notes.
 - The main game owns a typed `CharacterChoice` object containing the nullable
   sex choice (`F`, `M`, or `null`) and a `layers` array, and its own active-screen
   state. Each layer has a string `file` and numeric `x`, `y`, `size`, and
-  `zIndex`. Layers initially start empty; layer selection is deferred.
+  `zIndex`. Layers initially start empty and receive catalog defaults when
+  Shopping mounts; interactive layer selection is deferred.
 - The castle screen displays `assets/screens/castle.png` and advances to the
   sex-choice screen when activated by pointer, touch, or keyboard.
 - The sex-choice screen displays `assets/screens/sex-choice.png`. Its female
@@ -65,7 +66,16 @@ context and decisions, not temporary progress notes.
   Detection fires once per entry and rearms after leaving the region or screen.
   The character, controls, and timer remain mounted across this transition,
   preserving position and continuing the countdown inside the shop.
-- `Shopping` accepts `CharacterChoice` and `onTimerComplete`. Its character starts
+- `Shopping` accepts `CharacterChoice` and `onTimerComplete`. On mount, it creates
+  a local choice with layers from `assets/character-parts/master.json`: the first
+  entry for each of `clothes`, `face`, `shoes`, and `hair`, in that order,
+  under the incoming choice's sex. The catalog is an object keyed first by sex
+  (`M` or `F`), then by part, with arrays of rendering entries containing no
+  `sex` or `part` properties. Missing parts are omitted; null sex
+  produces empty layers. It copies the rendering fields without mutating props
+  or the catalog. Defaults are initialized once per mount. Timer completion
+  passes the local choice to `MainGame`, which saves it and uses it for the
+  player's fashion-show and score appearances. Its character starts
   at bottom center with one-third scene height. The control pad moves it in
   five-percentage-point steps, clamped to 0–100 for `top` and `left`. The timer
   sits at top-right at one-tenth scene width and signals `MainGame` to advance
@@ -175,11 +185,11 @@ context and decisions, not temporary progress notes.
   scrollable editor on the right, keeping the preview visible while editing.
   The `Girl` and `Boy` stories use the same editor with their respective sex
   and configured clothing, face, hair, and footwear layers. Their layer
-  coordinates are relative to the tightly cropped templates. Story size is
-  `83.5`, top is approximately `91.65`, and left is `50`. Story `x`, `y`, and
+  coordinates are relative to the tightly cropped templates. Story size and
+  top are both `100`, and left is `50`. Story `x`, `y`, and
   `size` values are rounded upward to multiples of `0.25` after compensating
   for removed template padding. Exact values live in `Character.stories.tsx`;
-  z-index values remain unchanged.
+  the Girl story's hair uses z-index `2`.
 - `src/components/Timer/`: reusable timer artwork with a percentage-positioned
   countdown display that starts at 100 and stops at zero.
 - `src/components/Dialog/`: reusable dialog-frame artwork with a centered,
@@ -187,7 +197,10 @@ context and decisions, not temporary progress notes.
 - `src/components/ControlPad/`: reusable bottom-right control-pad artwork with
   four responsive native-button hit zones.
 - `src/components/PartSelector/`: reusable image selector with bounded navigation,
-  cancel/confirm callbacks, and default, single-image, and empty Storybook previews.
+  cancel/confirm callbacks, and Girls clothes, Girls shoes, Girls hair, Boys shoes,
+  Boys hair, single-image, and empty Storybook previews. Each category story uses
+  all images from its corresponding sex and part in the character-parts catalog
+  in order; single-image uses the first `F.clothes` entry.
 - `src/screens/`: screen components and their local styles.
 - `src/index.css`: global full-viewport reset and letterbox background.
 - `assets/screens/`: source screen artwork imported through Vite.

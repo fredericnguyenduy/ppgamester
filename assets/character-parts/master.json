@@ -1,0 +1,78 @@
+{
+  "M": {
+    "clothes": [
+      {
+        "file": "boy-costume-1.png",
+        "x": 50,
+        "y": 52.5,
+        "size": 63.75,
+        "zIndex": 2
+      }
+    ],
+    "face": [
+      {
+        "file": "boy-face-1.png",
+        "x": 50,
+        "y": 11.75,
+        "size": 8.5,
+        "zIndex": 1
+      }
+    ],
+    "shoes": [
+      {
+        "file": "boy-feet-1.png",
+        "x": 50,
+        "y": 88.5,
+        "size": 29,
+        "zIndex": 1
+      }
+    ],
+    "hair": [
+      {
+        "file": "boy-hair-1.png",
+        "x": 50,
+        "y": 4.5,
+        "size": 22,
+        "zIndex": 1
+      }
+    ]
+  },
+  "F": {
+    "clothes": [
+      {
+        "file": "girl-dress-1.png",
+        "x": 50,
+        "y": 52.5,
+        "size": 59,
+        "zIndex": 0
+      }
+    ],
+    "face": [
+      {
+        "file": "girl-face-1.png",
+        "x": 50,
+        "y": 11.75,
+        "size": 8.5,
+        "zIndex": 1
+      }
+    ],
+    "hair": [
+      {
+        "file": "girl-hair-1.png",
+        "x": 50,
+        "y": 8,
+        "size": 23,
+        "zIndex": 2
+      }
+    ],
+    "shoes": [
+      {
+        "file": "girl-shoes-1.png",
+        "x": 50,
+        "y": 97,
+        "size": 12.5,
+        "zIndex": 1
+      }
+    ]
+  }
+}

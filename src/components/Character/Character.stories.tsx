@@ -206,8 +206,8 @@ export const Default: Story = {};
 
 export const Boy: Story = {
   args: {
-    size: 83.5,
-    top: 91.6458229115,
+    size: 100,
+    top: 100,
     left: 50,
     characterChoice: {
       sex: "M",
@@ -223,15 +223,15 @@ export const Boy: Story = {
 
 export const Girl: Story = {
   args: {
-    size: 83.5,
-    top: 91.6452442159,
+    size: 100,
+    top: 100,
     left: 50,
     characterChoice: {
       sex: "F",
       layers: [
         { file: "girl-dress-1.png", x: 50, y: 52.5, size: 59, zIndex: 0 },
         { file: "girl-face-1.png", x: 50, y: 11.75, size: 8.5, zIndex: 1 },
-        { file: "girl-hair-1.png", x: 50, y: 8, size: 23, zIndex: 1 },
+        { file: "girl-hair-1.png", x: 50, y: 8, size: 23, zIndex: 2 },
         { file: "girl-shoes-1.png", x: 50, y: 97, size: 12.5, zIndex: 1 },
       ],
     },

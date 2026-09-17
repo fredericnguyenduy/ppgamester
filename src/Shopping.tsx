@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import characterParts from '../assets/character-parts/master.json'
 import { Character } from './components/Character'
 import { ControlPad } from './components/ControlPad'
 import { Timer } from './components/Timer'
@@ -10,7 +11,7 @@ import './Shopping.css'
 
 type ShoppingProps = {
   characterChoice: CharacterChoice
-  onTimerComplete: () => void
+  onTimerComplete: (characterChoice: CharacterChoice) => void
 }
 
 type ShoppingScreen = 'outside-shops' | 'clothes-shop'
@@ -20,6 +21,23 @@ const CHARACTER_MOVE_STEP = 5
 const INITIAL_CHARACTER_POSITION: CharacterPosition = {
   top: 100,
   left: 50,
+}
+
+function initializeCharacterChoice(choice: CharacterChoice): CharacterChoice {
+  if (choice.sex === null) return { ...choice, layers: [] }
+
+  const parts = characterParts[choice.sex]
+  const defaultParts = ['clothes', 'face', 'shoes', 'hair'] as const
+  const layers = defaultParts.flatMap((part) => {
+    const match = parts[part]?.[0]
+
+    if (!match) return []
+
+    const { file, x, y, size, zIndex } = match
+    return [{ file, x, y, size, zIndex }]
+  })
+
+  return { ...choice, layers }
 }
 
 function clampToScene(value: number): number {
@@ -38,6 +56,9 @@ function moveCharacterPosition(
 }
 
 export function Shopping({ characterChoice, onTimerComplete }: ShoppingProps) {
+  const [shoppingCharacterChoice] = useState(() =>
+    initializeCharacterChoice(characterChoice),
+  )
   const [screen, setScreen] = useState<ShoppingScreen>('outside-shops')
   const [characterPosition, setCharacterPosition] = useState(
     INITIAL_CHARACTER_POSITION,
@@ -63,7 +84,7 @@ export function Shopping({ characterChoice, onTimerComplete }: ShoppingProps) {
   }, [characterPosition, screen])
 
   return (
-    <div className="shopping" data-sex={characterChoice.sex ?? undefined}>
+    <div className="shopping" data-sex={shoppingCharacterChoice.sex ?? undefined}>
       <div className="shopping__scene">
         {screen === 'clothes-shop' ? (
           <ClothesShopScreen
@@ -75,11 +96,11 @@ export function Shopping({ characterChoice, onTimerComplete }: ShoppingProps) {
         )}
 
         <div className="shopping__timer-frame">
-          <Timer onComplete={onTimerComplete} />
+          <Timer onComplete={() => onTimerComplete(shoppingCharacterChoice)} />
         </div>
 
         <Character
-          characterChoice={characterChoice}
+          characterChoice={shoppingCharacterChoice}
           size={CHARACTER_SIZE}
           top={characterPosition.top}
           left={characterPosition.left}

@@ -99,8 +99,9 @@ export function MainGame({ onRestart, onGameEnd }: MainGameProps) {
     return (
       <Shopping
         characterChoice={characterChoice}
-        onTimerComplete={() => {
-          setFashionShowChoices(createFashionShowChoices(characterChoice))
+        onTimerComplete={(shoppingChoice) => {
+          setCharacterChoice(shoppingChoice)
+          setFashionShowChoices(createFashionShowChoices(shoppingChoice))
           setFashionShowIndex(0)
           setPhase('fashion-show')
         }}
